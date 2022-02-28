@@ -1,0 +1,32 @@
+services:
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pwd
+      POSTGRES_DB: user_db
+    expose:
+      - "5432"
+    volumes:
+      - labwebsite-db:/var/lib/postgresql/data 
+      - ./init_data:/docker-entrypoint-initdb.d
+
+
+  blast:
+    build: 
+      context: ./
+      dockerfile: Dockerfile
+    working_dir: /blast  # /app/blastdb_custom
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+      - "8000:8000"
+    volumes:
+      - "./db/queries:/blast/queries:rw" # Where all the queries are written to
+      - "./db/results:/blast/results:rw" # Where all the results are written to
+      - "./website:/blast/website:rw" 
+
+volumes:
+  labwebsite-db: {}
