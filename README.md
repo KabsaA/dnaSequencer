@@ -67,8 +67,6 @@ home/
 ## Deployment:
 - To deploy the app you must download all the source code, then run `docker-compose build`, then run `docker-compose up`. Once this has finished running then you can can access the service from `http://localhost:3000/`. We were not able to get it to work on one machine, the downloaded database would not decompress. We were not able to solve this issue.
 
-## Test Cases: 
-- [Link to Test Cases](https://github.com/CU-CSCI-3308-Fall-2021/CSCI-3308-Fall21-015-07/blob/main/testcases.md)
 
 ## Contributors:
 - Colin Moore
