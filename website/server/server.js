@@ -5,9 +5,6 @@ app.use(bodyParser.json());              // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 const port = 8000;
 const cors = require('cors');
-
-//Create Database Connection
-var pgp = require('pg-promise')();
 const { pool } = require("./dbConfig");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
@@ -30,6 +27,7 @@ require("dotenv").config();
   password: This the password for accessing the database. We set this in the
 		
 **********************/
+
 const PORT = process.env.PORT || 8000;
 const initializePassport = require("./passportConfig");
 
