@@ -119,29 +119,20 @@ app.post('/src/search', (req, res) => {
     });
 });
 
-//Database signup
-app.post('/signupData', (req,res) => {
-    db.any(`INSERT INTO user_database(username, pword, firstname, lastname)
-            VALUES('${req.body.email}', '${req.body.password}', '${req.body.firstName}', '${req.body.lastName}');`)
-    .then(console.log)
-    .then(() => {
-        res.json({message: "it worked"})
-    })
-    .catch(err => {
-        console.log('error', err)
-        res.json({message: "error"})
-    });
-    
-});
+// checking if user is authenticated
+function checkAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return res.redirect("http://localhost:3000");
+  }
+  next();
+}
 
-//login 
-/*
-app.get('/loginData', (req,res) => {
-    db.any(`INSERT INTO user_database (username, pword, firstname, lastname)
-            VALUES (${req.body.email}, ${req.body.password}, ${req.body.firstName}, ${req.body.lastName})`).then(console.log);
-    
-});
-*/
+function checkNotAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect("/users/login");
+}
 
 app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`);
