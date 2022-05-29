@@ -5,10 +5,18 @@ app.use(bodyParser.json());              // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 const port = 8000;
 const cors = require('cors');
-app.use(cors());
-app.use(express.static(`build`))
+
 //Create Database Connection
 var pgp = require('pg-promise')();
+const { pool } = require("./dbConfig");
+const bcrypt = require("bcrypt");
+const passport = require("passport");
+const flash = require("express-flash");
+const session = require("express-session");
+
+app.use(cors());
+app.use(express.static(`build`))
+require("dotenv").config();
 
 /**********************
   Database Connection information
@@ -20,22 +28,36 @@ var pgp = require('pg-promise')();
   database: This is the name of our specific database.
   user: This should be left as postgres, the default user account created when PostgreSQL was installed
   password: This the password for accessing the database. We set this in the
-		docker-compose.yml for now, usually that'd be in a seperate file so you're not pushing your credentials to GitHub :).
+		
 **********************/
+const PORT = process.env.PORT || 8000;
+const initializePassport = require("./passportConfig");
+
 const dbConfig = {
 	host: 'db',
 	port: 5432,
-	database: 'user_db',
+	database: 'users',
 	user: 'postgres',
-	password: 'pwd'
+	password: 'password'
 };
 
-var db = pgp(dbConfig);
+app.use(express.urlencoded({ extended: false }));
+// adding express as our view engine
+app.set("view engine", "ejs");
 
-// Creating filesystem variable
-var fs = require("fs");
+// adding passport session in our middle ware
+app.use(
+  session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: false
+  })
+);
 
-const { exec } = require('child_process');
+// initializing passport sessions
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 
 
 app.get('/api/test', (req, res) => {
