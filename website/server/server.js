@@ -1,8 +1,5 @@
 const express = require('express');
 const app = express();
-var bodyParser = require('body-parser'); //Ensure our body-parser tool has been added
-app.use(bodyParser.json());              // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 const port = 8000;
 const cors = require('cors');
 const { pool } = require("./dbConfig");
@@ -31,13 +28,6 @@ require("dotenv").config();
 const PORT = process.env.PORT || 8000;
 const initializePassport = require("./passportConfig");
 
-const dbConfig = {
-	host: 'db',
-	port: 5432,
-	database: 'users',
-	user: 'postgres',
-	password: 'password'
-};
 
 app.use(express.urlencoded({ extended: false }));
 // adding express as our view engine
