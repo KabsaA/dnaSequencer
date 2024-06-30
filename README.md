@@ -1,4 +1,4 @@
-# CSCI-3308-Fall21-015-07 - DNSAR (DNA Search Alignment Resource)
+# CSCI-3308-Fall - DNSAR (DNA Search Alignment Resource)
 
 ## Structure
 ```
