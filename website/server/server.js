@@ -21,7 +21,7 @@ require("dotenv").config();
   port: This defines what port we can expect to communicate to our database.  We'll use 5432 to talk with PostgreSQL
   database: This is the name of our specific database.
   user: This should be left as postgres, the default user account created when PostgreSQL was installed
-  password: This the password for accessing the database. We set this in the
+  password: This the password for accessing the database. 
 		
 **********************/
 
